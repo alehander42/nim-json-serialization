@@ -7,7 +7,7 @@ type
 proc writeValue*(writer: var JsonWriter, value: TableType) =
   writer.beginRecord()
   for key, val in value:
-    writer.writeField key, val
+    writer.writeField $key, val
   writer.endRecord()
 
 proc readValue*(reader: var JsonReader, value: var TableType) =
