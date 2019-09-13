@@ -130,9 +130,17 @@ iterator readObject*(r: var JsonReader, KeyType: typedesc, ValueType: typedesc):
   r.skipToken tkCurlyLe
   if r.lexer.tok != tkCurlyRi:
     while true:
-      var key: KeyType
+      when KeyType is int:
+        var keyRaw: string
+      else:
+        var keyRaw: KeyType
       var value: ValueType
-      readValue(r, key)
+      readValue(r, keyRaw)
+      when KeyType is int:
+        var key = parseInt(keyRaw)
+      else:
+        var key = keyRaw
+      echo "key", key
       if r.lexer.tok != tkColon: break
       r.lexer.next()
       readValue(r, value)
