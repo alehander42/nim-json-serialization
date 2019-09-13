@@ -140,7 +140,7 @@ iterator readObject*(r: var JsonReader, KeyType: typedesc, ValueType: typedesc):
         var key = parseInt(keyRaw)
       else:
         var key = keyRaw
-      echo "key", key
+      # echo "key", key
       if r.lexer.tok != tkColon: break
       r.lexer.next()
       readValue(r, value)
