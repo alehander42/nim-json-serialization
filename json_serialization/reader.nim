@@ -206,16 +206,16 @@ proc readValue*(r: var JsonReader, value: var auto) =
     r.lexer.next()
 
   elif value is ref|ptr:
-    when compiles(isNotNilCheck(value)):
+    # when compiles(isNotNilCheck(value)):
+      # allocPtr value
+      # value[] = readValue(r, type(value[]))
+    # else:
+    if tok == tkNull:
+      value = nil
+      r.lexer.next()
+    else:
       allocPtr value
       value[] = readValue(r, type(value[]))
-    else:
-      if tok == tkNull:
-        value = nil
-        r.lexer.next()
-      else:
-        allocPtr value
-        value[] = readValue(r, type(value[]))
 
   elif value is enum:
     case tok
